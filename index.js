@@ -9,17 +9,18 @@ app.use((req, res, next) => {
     next();
 });
 
+// Proxy các yêu cầu đến /api
 app.use('/api', (req, res) => {
     const url = 'http://14.225.255.190:8081' + req.url;
     const options = {
         url: url,
         headers: {
-            'User-Agent': 'request'
+            'User-Agent': 'request',
+            // Thêm các header cần thiết khác
         }
     };
     req.pipe(request(options)).pipe(res);
 });
-
 
 // Route mặc định cho các yêu cầu khác
 app.use((req, res) => {
